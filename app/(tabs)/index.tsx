@@ -9,7 +9,11 @@ import {
   Alert,
   ScrollView,
   SafeAreaView,
+  Platform
 } from "react-native";
+import { BackHandler } from "react-native"; // Import BackHandler
+import * as ImagePicker from "expo-image-picker"; // Import ImagePicker
+/* ---- Icons ---- */
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -69,18 +73,60 @@ const HomeScreen = () => {
     setProfileData((prevData) => ({ ...prevData, [key]: value }));
   };
 
+  const handleLogout = () => {
+    // Close the app or navigate to a login screen
+    BackHandler.exitApp(); // This will close the app
+  };
+
+  // Function to pick an image
+  const pickImage = async (type) => {
+    try {
+      // Request media library permissions if not already granted
+      if (Platform.OS !== "web") {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          Alert.alert("Permission Denied", "Sorry, we need camera roll permissions to make this work!");
+          return;
+        }
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        const selectedImage = result.assets[0].uri;
+        if (type === "profile") {
+          setProfileData((prevData) => ({ ...prevData, profilePicture: { uri: selectedImage } }));
+        } else if (type === "cover") {
+          setProfileData((prevData) => ({ ...prevData, coverPicture: { uri: selectedImage } }));
+        }
+      }
+    } catch (error) {
+      console.error("Error picking image:", error);
+      Alert.alert("Error", "An error occurred while selecting the image.");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.coverImageContainer}>
-          <Image source={profileData.coverPicture} style={styles.coverImage} />
+          <TouchableOpacity onPress={() => editing && pickImage("cover")} disabled={!editing}>
+            <Image source={profileData.coverPicture} style={styles.coverImage} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.profileImageContainer}>
-          <Image
-            source={profileData.profilePicture}
-            style={styles.profileImage}
-          />
+          <TouchableOpacity onPress={() => editing && pickImage("profile")} disabled={!editing}>
+            <Image
+              source={profileData.profilePicture}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
         </View>
 
         {/* Full Name Row */}
@@ -318,6 +364,13 @@ const HomeScreen = () => {
             <Text style={styles.buttonText}>Delete Account</Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.horizontalLine} />
+
+         {/* Logout Button */}
+         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -422,7 +475,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   editButton: {
-    backgroundColor: "#333",
+    backgroundColor: "#555",
   },
   deleteButton: {
     backgroundColor: "#555",
@@ -430,6 +483,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontSize: 16,
+  },
+  logoutButton: {
+    backgroundColor: "#333",
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  logoutButtonText: {
+    color: "white",
     fontSize: 16,
   },
 });
