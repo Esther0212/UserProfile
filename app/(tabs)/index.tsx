@@ -10,23 +10,32 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Octicons from "@expo/vector-icons/Octicons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const HomeScreen = () => {
   const [editing, setEditing] = useState(false);
 
   const [profileData, setProfileData] = useState({
-    fullName: "",
-    username: "",
-    email: "",
-    phone: "",
-    location: "",
-    dob: "",
-    aboutMe: "",
-    occupation: "",
-    education: "",
-    website: "",
-    hobbies: "",
-    skills: "",
+    fullName: "Esther Beuthel G. Eblacas",
+    username: "@everwing",
+    email: "eblacas.estherbeuthel@gmail.com",
+    phone: "09367813089",
+    location: "Carmen, CDO",
+    dob: "December 14, 2002",
+    aboutMe: "I love cats.",
+    occupation: "Student",
+    education: "University of Science and Technology of Southern Philippines",
+    website: "www.example.com",
+    hobbies: "Gaming, Drawing",
+    skills: "A bit of programming",
     profilePicture: require("../../assets/images/profile.jpg"),
     coverPicture: require("../../assets/images/cover.jpg"),
   });
@@ -78,6 +87,7 @@ const HomeScreen = () => {
         <View style={styles.row}>
           {editing ? (
             <>
+              <FontAwesome5 name="user-alt" size={24} color="black" />
               <Text style={styles.label}>Full Name:</Text>
               <TextInput
                 style={styles.input}
@@ -97,6 +107,7 @@ const HomeScreen = () => {
         <View style={styles.row}>
           {editing ? (
             <>
+              <AntDesign name="infocirlce" size={24} color="black" />
               <Text style={styles.label}>Username:</Text>
               <TextInput
                 style={styles.input}
@@ -116,6 +127,7 @@ const HomeScreen = () => {
         <Text style={styles.sectionTitle}>Basic Information</Text>
 
         <View style={styles.row}>
+          <MaterialIcons name="email" size={24} color="black" />
           <Text style={styles.label}>Email:</Text>
           {editing ? (
             <TextInput
@@ -132,6 +144,7 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.row}>
+          <Entypo name="phone" size={24} color="black" />
           <Text style={styles.label}>Phone:</Text>
           {editing ? (
             <TextInput
@@ -148,6 +161,7 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.row}>
+          <FontAwesome5 name="location-arrow" size={24} color="black" />
           <Text style={styles.label}>Location:</Text>
           {editing ? (
             <TextInput
@@ -164,6 +178,7 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.row}>
+          <FontAwesome name="calendar" size={24} color="black" />
           <Text style={styles.label}>Date of Birth:</Text>
           {editing ? (
             <TextInput
@@ -183,6 +198,7 @@ const HomeScreen = () => {
         <Text style={styles.sectionTitle}>Profile Details</Text>
 
         <View style={styles.row}>
+          <Octicons name="question" size={24} color="black" />
           <Text style={styles.label}>About Me:</Text>
           {editing ? (
             <TextInput
@@ -199,6 +215,7 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.row}>
+          <MaterialIcons name="work" size={24} color="black" />
           <Text style={styles.label}>Occupation:</Text>
           {editing ? (
             <TextInput
@@ -215,6 +232,7 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.row}>
+          <Ionicons name="school" size={24} color="black" />
           <Text style={styles.label}>Education:</Text>
           {editing ? (
             <TextInput
@@ -231,6 +249,7 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.row}>
+          <MaterialCommunityIcons name="web" size={24} color="black" />
           <Text style={styles.label}>Website:</Text>
           {editing ? (
             <TextInput
@@ -250,6 +269,7 @@ const HomeScreen = () => {
         <Text style={styles.sectionTitle}>Interests and Preferences</Text>
 
         <View style={styles.row}>
+          <AntDesign name="heart" size={24} color="black" />
           <Text style={styles.label}>Hobbies:</Text>
           {editing ? (
             <TextInput
@@ -266,6 +286,7 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.row}>
+          <FontAwesome6 name="bars-progress" size={24} color="black" />
           <Text style={styles.label}>Skills:</Text>
           {editing ? (
             <TextInput
@@ -333,7 +354,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     backgroundColor: "#ddd",
     marginTop: -80,
-    marginBottom: 40,
+    marginBottom: 20,
     borderWidth: 5,
     borderColor: "#fff",
     overflow: "hidden",
@@ -353,6 +374,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
     fontSize: 16,
+    marginLeft: 5, // Add margin here for spacing
   },
   value: {
     flex: 2,
@@ -362,11 +384,11 @@ const styles = StyleSheet.create({
   centeredText: {
     textAlign: "center", // Center the text
     flex: 1, // Allow the text to take equal space in the row
-  },  
+  },
   boldValue: {
     fontWeight: "bold",
     fontSize: 30,
-    color: 'black',
+    color: "black",
   },
   input: {
     flex: 2,
